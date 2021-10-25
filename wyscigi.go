@@ -160,7 +160,7 @@ func race(grp []car) {
 // dwa czary
 func final(gr []car, c car) int {
 	grFastest := c
-	gr = append(gr[:0], gr[1:]...)
+	gr = append(gr[1:])
 	gr = append(gr, c)
 	race(gr)
 	// PS pewnie mogl bym to zrobic w switch-u ale nie chce mi sie przepisywac
