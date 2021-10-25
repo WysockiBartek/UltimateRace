@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"reflect"
+	"sort"
 )
 
 var raceCounter int = 0
@@ -50,23 +51,54 @@ func RaceSortRemove(allCars []Car) []Car {
 }
 
 func main() {
-	mainLength := 25
+	mainLength := 5
 	subLenght := 5
-	allCars := []Car{}
+	allCars := make([][]Car, 5)
+	podium := make([]Car, 3)
+	finalGr := make([]Car, 5)
+	// gr1 := []Car{}
+	// gr2 := []Car{}
+	// gr3 := []Car{}
+	// gr4 := []Car{}
+	// gr5 := []Car{}
+	// gr6 := []Car{}
 
-	for i := 0; i < subLenght; i++ {
-		for j := 0; j < 5; j++ {
-			allCars = append(allCars, Car{})
+	for i := 0; i < mainLength; i++ {
+		allCars[i] = make([]Car, 5)
+		for j := 0; j < subLenght; j++ {
+			allCars[i][j] = Car{}
 		}
-
 	}
 
-	for i := 0; i < 11; i++ {
-		allCars = RaceSortRemove(allCars)
+	for i := 0; i < mainLength; i++ {
+		sort.Slice(allCars[i], func(a, b int) bool {
+			return allCars[i][a].GetCarSpeed() > allCars[i][b].GetCarSpeed()
+		})
 	}
 
-	fmt.Println("Race results: ")
-	for _, c := range allCars {
-		fmt.Printf(" %d\n", c.speed)
-	}
+	sort.Slice(allCars, func(a, b int) bool {
+		return allCars[a][0].GetCarSpeed() > allCars[b][0].GetCarSpeed()
+	})
+
+	podium[0] = allCars[0][0]
+
+	finalGr = append(finalGr, allCars[0][1], allCars[0][2], allCars[1][0], allCars[1][1], allCars[2][0])
+
+	sort.Slice(finalGr, func(a, b int) bool {
+		return finalGr[a].GetCarSpeed() > finalGr[b].GetCarSpeed()
+	})
+
+	podium = append(podium, finalGr[0], finalGr[1])
+
+	fmt.Println("All Cars: ", allCars)
+	fmt.Println("Final Group: ", finalGr)
+	fmt.Println("Podium: ", podium)
+	// for i := 0; i < 11; i++ {
+	// 	allCars = RaceSortRemove(allCars)
+	// }
+
+	// fmt.Println("Race results: ")
+	// for _, c := range allCars {
+	// 	fmt.Printf(" %d\n", c.speed)
+	// }
 }

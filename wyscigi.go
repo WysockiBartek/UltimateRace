@@ -71,6 +71,9 @@ func doIt() {
 	}
 	// dodaj naszybszy samochod do podium
 	podium = append(podium, gr6[0])
+
+	gr6 = append(gr6, gr1[1], gr1[2], gr2[0], gr2[1], gr3[0])
+
 	// znajdz drugi i trzeci najszybszy samochod poprzez podmienianie [0] samochodu w grupie
 	// samochodem gr6[i] == v
 	// for i, v := range gr6 {
